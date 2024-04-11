@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Box, Heading, Input, Button, Flex, Checkbox, Text, IconButton, VStack, StackDivider, HStack, Spacer, UnorderedList, ListItem } from "@chakra-ui/react";
 import { FaPlus, FaTrash } from "react-icons/fa";
+import TransactionList from "./TransactionList";
 
 const Index = () => {
   const [todos, setTodos] = useState([]);
@@ -88,6 +89,7 @@ const Index = () => {
             ))}
           </UnorderedList>
         </Box>
+        <TransactionList />
       </Box>
       <Box as="footer" bg="gray.100" py={4} mt="auto" width="100%">
         <Text textAlign="center">Created by GPT Engineer</Text>
