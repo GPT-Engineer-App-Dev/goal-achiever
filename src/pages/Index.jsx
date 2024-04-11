@@ -7,7 +7,8 @@ const Index = () => {
   const [newTodo, setNewTodo] = useState("");
 
   const handleAddTodo = () => {
-    if (newTodo.trim() !== "") {
+    const trimmedTodo = newTodo.trim();
+    if (trimmedTodo !== "") {
       setTodos([...todos, { text: newTodo, completed: false }]);
       setNewTodo("");
     }
@@ -25,12 +26,28 @@ const Index = () => {
   };
 
   return (
-    <Box maxWidth="500px" margin="auto" p={4}>
+    <Box height="100vh" display="flex" flexDirection="column">
+      <Box as="nav" bg="blue.500" py={4}>
+        <Box maxWidth="500px" margin="auto">
+          <Text color="white" fontWeight="bold">My Todo App</Text>
+        </Box>
+      </Box>
+      <Box maxWidth="500px" margin="auto" p={4} flex="1">
       <Heading as="h1" size="xl" textAlign="center" mb={8}>
         My Todo List
       </Heading>
       <Flex mb={8}>
-        <Input value={newTodo} onChange={(e) => setNewTodo(e.target.value)} placeholder="Enter a new todo" mr={4} />
+        <Input
+          value={newTodo}
+          onChange={(e) => setNewTodo(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleAddTodo();
+            }
+          }}
+          placeholder="Enter a new todo"
+          mr={4}
+        />
         <Button leftIcon={<FaPlus />} colorScheme="blue" onClick={handleAddTodo}>
           Add
         </Button>
@@ -47,7 +64,8 @@ const Index = () => {
           </HStack>
         ))}
       </VStack>
-      <Box as="footer" bg="gray.100" mt={8} py={4}>
+      </Box>
+      <Box as="footer" bg="gray.100" py={4} mt="auto" width="100%">
         <Text textAlign="center">Created by GPT Engineer</Text>
       </Box>
     </Box>
