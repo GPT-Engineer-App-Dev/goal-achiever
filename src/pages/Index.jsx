@@ -47,6 +47,9 @@ const Index = () => {
           </HStack>
         ))}
       </VStack>
+      <Box as="footer" bg="gray.100" mt={8} py={4}>
+        <Text textAlign="center">Created by GPT Engineer</Text>
+      </Box>
     </Box>
   );
 };
