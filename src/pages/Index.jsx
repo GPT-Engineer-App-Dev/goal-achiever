@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Heading, Input, Button, Flex, Checkbox, Text, IconButton, VStack, StackDivider, HStack, Spacer, UnorderedList, ListItem } from "@chakra-ui/react";
 import { FaPlus, FaTrash } from "react-icons/fa";
 
-const Index = () => {
+const IndexPage = () => {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
   const [cities, setCities] = useState([]);
@@ -96,4 +96,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default IndexPage;
