@@ -2,11 +2,21 @@ import React, { useState, useEffect } from "react";
 import { Box, Heading, Input, Button, Flex, Checkbox, Text, IconButton, VStack, StackDivider, HStack, Spacer, UnorderedList, ListItem } from "@chakra-ui/react";
 import { FaPlus, FaTrash } from "react-icons/fa";
 import TransactionList from "./TransactionList";
+import SearchBar from "../components/SearchBar";
 
 const IndexPage = () => {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
   const [cities, setCities] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredTodos = todos.filter((todo) =>
+    todo.text.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const filteredCities = cities.filter((city) =>
+    city.city.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -48,6 +58,7 @@ const IndexPage = () => {
         </Box>
       </Box>
       <Box maxWidth="500px" margin="auto" p={4} flex="1">
+        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
         <Heading as="h1" size="xl" textAlign="center" mb={8}>
           My Todo List
         </Heading>
@@ -68,7 +79,7 @@ const IndexPage = () => {
           </Button>
         </Flex>
         <VStack divider={<StackDivider borderColor="gray.200" />} spacing={4} align="stretch">
-          {todos.map((todo, index) => (
+          {filteredTodos.map((todo, index) => (
             <HStack key={index}>
               <Checkbox isChecked={todo.completed} onChange={() => handleToggleComplete(index)} />
               <Text flex="1" textDecoration={todo.completed ? "line-through" : "none"}>
@@ -84,12 +95,12 @@ const IndexPage = () => {
             Top 20 Cities
           </Heading>
           <UnorderedList>
-            {cities.map((city, index) => (
+            {filteredCities.map((city, index) => (
               <ListItem key={index}>{city.city}</ListItem>
             ))}
           </UnorderedList>
         </Box>
-        <TransactionList />
+        <TransactionList searchQuery={searchQuery} />
       </Box>
       <Box as="footer" bg="gray.100" py={4} mt="auto" width="100%">
         <Text textAlign="center">Created by GPT Engineer</Text>
