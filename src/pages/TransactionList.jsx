@@ -1,5 +1,6 @@
 import React from "react";
 import { Box, Heading, Text, UnorderedList, ListItem } from "@chakra-ui/react";
+import TransactionTodoList from "./TransactionTodoList";
 
 const TransactionList = () => {
   const transactions = [
@@ -15,6 +16,7 @@ const TransactionList = () => {
       <Heading as="h2" size="lg" mb={4}>
         Transactions
       </Heading>
+      <TransactionTodoList />
       <Text fontWeight="bold" mb={2}>
         Total Budget: ${totalBudget}
       </Text>
