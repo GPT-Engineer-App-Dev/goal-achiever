@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, Heading, Input, Button, Flex, Checkbox, Text, IconButton, VStack, StackDivider, HStack, Spacer, UnorderedList, ListItem } from "@chakra-ui/react";
+import { Box, Heading, Input, Button, Flex, Checkbox, Text, IconButton, VStack, StackDivider, HStack, Spacer, UnorderedList, ListItem, Stack } from "@chakra-ui/react";
 import { FaPlus, FaTrash } from "react-icons/fa";
 import TransactionList from "./TransactionList";
 import SearchBar from "../components/SearchBar";
@@ -9,14 +9,12 @@ const IndexPage = () => {
   const [newTodo, setNewTodo] = useState("");
   const [cities, setCities] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const citiesPerPage = 10;
 
-  const filteredTodos = todos.filter((todo) =>
-    todo.text.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredTodos = todos.filter((todo) => todo.text.toLowerCase().includes(searchQuery.toLowerCase()));
 
-  const filteredCities = cities.filter((city) =>
-    city.city.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredCities = cities.filter((city) => city.city.toLowerCase().includes(searchQuery.toLowerCase()));
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -95,10 +93,19 @@ const IndexPage = () => {
             Top 20 Cities
           </Heading>
           <UnorderedList>
-            {filteredCities.map((city, index) => (
+            {filteredCities.slice((currentPage - 1) * citiesPerPage, currentPage * citiesPerPage).map((city, index) => (
               <ListItem key={index}>{city.city}</ListItem>
             ))}
           </UnorderedList>
+          <Box mt={4}>
+            <Stack direction="row" spacing={2} justifyContent="center">
+              {Array.from({ length: Math.ceil(filteredCities.length / citiesPerPage) }).map((_, index) => (
+                <Button key={index} size="sm" variant={currentPage === index + 1 ? "solid" : "outline"} colorScheme="blue" onClick={() => setCurrentPage(index + 1)}>
+                  {index + 1}
+                </Button>
+              ))}
+            </Stack>
+          </Box>
         </Box>
         <TransactionList searchQuery={searchQuery} />
       </Box>
