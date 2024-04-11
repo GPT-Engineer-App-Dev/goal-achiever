@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Box, Heading, Input, Button, Checkbox, Text } from "@chakra-ui/react";
 
-const TransactionTodoList = () => {
+const TransactionTodoList = ({ searchQuery }) => {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState("");
+
+  const filteredTodos = todos.filter((todo) => todo.text.toLowerCase().includes(searchQuery.toLowerCase()));
 
   const handleAddTodo = () => {
     if (newTodo.trim() !== "") {
@@ -29,7 +31,7 @@ const TransactionTodoList = () => {
         <Input value={newTodo} onChange={(e) => setNewTodo(e.target.value)} placeholder="Enter a new todo" mr={2} />
         <Button onClick={handleAddTodo}>Add</Button>
       </Box>
-      {todos.map((todo) => (
+      {filteredTodos.map((todo) => (
         <Box key={todo.id} display="flex" alignItems="center">
           <Checkbox isChecked={todo.completed} onChange={() => handleToggleTodo(todo.id)} mr={2} />
           <Text textDecoration={todo.completed ? "line-through" : "none"}>{todo.text}</Text>
